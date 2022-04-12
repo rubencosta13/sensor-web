@@ -31,7 +31,15 @@ const Home = () => {
 
         </div>
         {/* <div>{tifOptions}</div> */}
-        <div><ChartViewer/></div>
+        <div className="chart">
+          <style jsx>{`
+            .chart {
+              position: relative;
+              height:40vh; 
+              width:80vw
+            }
+          `}</style>
+          <ChartViewer/></div>
         
       </div>
     );
