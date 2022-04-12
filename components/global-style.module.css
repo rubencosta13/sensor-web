@@ -8,3 +8,12 @@
 .accent-color {
     background-color: rgba(42, 131, 214, 0.521) !important;
 }
+
+.chart {
+    max-height: 300px;
+    width: auto;
+}
+
+.footer {
+    min-height: 80vh;
+}

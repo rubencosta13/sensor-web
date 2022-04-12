@@ -2,6 +2,9 @@ import { retrieveSensorData } from "../api/date";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ChartViewer from "../components/chart";
+import styles from '../components/global-style.module.css'
+
+
 
 const Home = () => {
     const [data, setData] = useState({});
@@ -19,10 +22,6 @@ const Home = () => {
     useEffect(() => {
       fetchPosts()
     }, []);
-    const fields = ["PM 10", "PM 2.5", "Temperatura", "Humidade", "Pressão"]
-    const tifOptions = Object.keys(data).map((key, index) => 
-        <p key={key}><span className="font-weight-bold" key={key}>{fields[index]}:</span> {data[key]? data[key] : "Erro"}</p>
-    )
     return (
       <div>
         <div id="temperature_display" className="text-center mt-auto col-12 mb-3 mb-sm-0">
@@ -30,16 +29,14 @@ const Home = () => {
           <p className="text-center">Dados de: {new Date( timestamp *1000).toLocaleString()}</p>
 
         </div>
-        {/* <div>{tifOptions}</div> */}
-        <div className="chart">
-          <style jsx>{`
-            .chart {
-              position: relative;
-              height:40vh; 
-              width:80vw
-            }
-          `}</style>
-          <ChartViewer/></div>
+        <div class="grid">
+          <div class="chart">
+            <div style={{position: "relative", width:100+"%", height:100+"%"}}>
+              <ChartViewer/>
+            </div>
+          </div>
+        </div>
+
         
       </div>
     );

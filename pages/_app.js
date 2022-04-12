@@ -1,8 +1,10 @@
-import React from 'react';
-import Head from 'next/head'
+import React, { useEffect } from 'react';
+import Head from 'next/head';
 import Layout from '../components/Layout';
+import Script from 'next/dist/client/script';
 import 'bootstrap/dist/css/bootstrap.css';
-import '../components/global-style.module.css';
+
+
 
 const MyApp = ({Component, pageProps}) => {
     return (

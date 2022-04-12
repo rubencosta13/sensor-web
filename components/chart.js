@@ -73,12 +73,8 @@ const ChartViewer = () => {
     <div>
         <h3 className="title text-center">Informações detalhadas</h3>
         <Line
-        className="img-fluid"
         data={data}
-        width={250}
-        height={10}
         options={{
-            indexAxis: "x",
             responsive: true,
             maintainAspectRatio: false
         }}
