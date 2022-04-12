@@ -1,14 +1,15 @@
 
 import React, { useState, useEffect } from 'react';
+import { Line } from 'react-chartjs-2'
 import { Chart as ChartJS } from 'chart.js/auto'
-import { Chart as Chart, Line }            from 'react-chartjs-2'
+
 import axios from 'axios';
 
 const getData = async () => {
 
     const currentDate = Math.floor(new Date(Date.now())/1000) 
     let yesterday = new Date();
-    yesterday.setHours(0,0,0,1);
+    yesterday.setHours(8,0,0,0);
     yesterday = Math.floor(yesterday.valueOf()/1000)
     const sensorData = await axios.post(`https://h2801469.stratoserver.net/get.php?id=2475238&from=${yesterday}&to=${currentDate}&minimize=false&with_gps=true&with_note=true`)
     const result = sensorData.data
@@ -20,6 +21,7 @@ const getData = async () => {
         // data.datasets[4].data.push((res.p).toFixed(2))
         data.labels.push(new Date( res.time *1000).toLocaleString())
     }
+    console.log(data.labels.length)
 
 }
 
@@ -74,9 +76,10 @@ const ChartViewer = () => {
         <h3 className="title text-center">Informações detalhadas</h3>
         <Line
         data={data}
+        
         options={{
             responsive: true,
-            maintainAspectRatio: false
+            maintainAspectRatio: true
         }}
         />
     </div>

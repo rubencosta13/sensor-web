@@ -29,15 +29,13 @@ const Home = () => {
           <p className="text-center">Dados de: {new Date( timestamp *1000).toLocaleString()}</p>
 
         </div>
-        <div class="grid">
-          <div class="chart">
+        <div className="grid">
+          <div className="chart">
             <div style={{position: "relative", width:100+"%", height:100+"%"}}>
               <ChartViewer/>
             </div>
           </div>
         </div>
-
-        
       </div>
     );
 };
