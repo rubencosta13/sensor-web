@@ -21,7 +21,6 @@ const getData = async () => {
         // data.datasets[4].data.push((res.p).toFixed(2))
         data.labels.push(new Date( res.time *1000).toLocaleString())
     }
-    console.log(data.labels.length)
 
 }
 
@@ -76,7 +75,9 @@ const ChartViewer = () => {
         <h3 className="title text-center">Informações detalhadas</h3>
         <Line
         data={data}
-        
+        height={30+"%"}
+        width={80+"%"}
+        style={{flex:1,justifyContent:'center',alignItems: 'center',  textAlign: 'center'}}
         options={{
             responsive: true,
             maintainAspectRatio: true

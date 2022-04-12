@@ -1,6 +1,6 @@
 const SensorWebpage = () => {
     return ( 
-        <h1 className="title text-center">O sensor</h1>
+        <h1 style={{marginTop: "1.5vh"}} className="text-center" >SOON ...</h1>
     );
 }
  
