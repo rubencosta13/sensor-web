@@ -20,6 +20,7 @@ const NavbarComponent = () => {
             </Navbar.Collapse>
         </Container>
         </Navbar>
+        <div style={{marginBottom: "2rem"}}></div>
       </div>
     );
 }

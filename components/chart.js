@@ -9,7 +9,7 @@ const getData = async () => {
 
     const currentDate = Math.floor(new Date(Date.now())/1000) 
     let yesterday = new Date();
-    yesterday.setHours(8,0,0,0);
+    yesterday.setHours(0,0,0,1);
     yesterday = Math.floor(yesterday.valueOf()/1000)
     const sensorData = await axios.post(`https://h2801469.stratoserver.net/get.php?id=2475238&from=${yesterday}&to=${currentDate}&minimize=false&with_gps=true&with_note=true`)
     const result = sensorData.data
@@ -72,7 +72,7 @@ const ChartViewer = () => {
     }, []);
     return (
     <div>
-        <h3 className="title text-center">Informações detalhadas</h3>
+        <h3 className="title text-center" style={{marginTop: "1.5rem"}}>Informações detalhadas</h3>
         <Line
         data={data}
         height={30+"%"}
