@@ -37,12 +37,12 @@ const Home = () => {
           <div className="text-center">Dados de: {new Date( timestamp *1000).toLocaleString()}</div>
         </div>
         <div className="d-flex justify-content-center">
-          {/* <MobileView>
+          <MobileView>
             <button
               className="btn btn-success"
               onClick={rotateDevice}    
             >Rodar Dispositivo </button>
-          </MobileView> */}
+          </MobileView>
           <button
             className="btn btn-success"
             onClick={refreshContent}
