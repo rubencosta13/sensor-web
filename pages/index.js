@@ -45,7 +45,7 @@ const Home = () => {
           </MobileView>
           <button
             className="btn btn-success"
-            onClick={refreshContent}
+            onClick={rotateDevice}
           >Atualizar dados</button>
         </div>
         <div style={{width:'100%', height:'80vh'}}>
