@@ -19,7 +19,6 @@ const Home = () => {
     const rotateDevice = async () => {
       console.log("Updated");
       let orientation = (screen.orientation || {}).type || screen.mozOrientation || screen.msOrientation; 
-      await document.body.requestFullscreen();
       await screen.orientation.lock("landscape");
       // transform: rotate(90 deg)
     };
