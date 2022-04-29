@@ -17,6 +17,7 @@ const Home = () => {
       setTimestamp(data.data[data.data.length -1].time)
     };
     const rotateDevice = () => {
+      console.log("Updated");
       let orientation = (screen.orientation || {}).type || screen.mozOrientation || screen.msOrientation; 
       await document.body.requestFullscreen();
       await screen.orientation.lock("landscape");
