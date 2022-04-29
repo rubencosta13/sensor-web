@@ -18,8 +18,8 @@ const Home = () => {
     };
     const rotateDevice = () => {
       let orientation = (screen.orientation || {}).type || screen.mozOrientation || screen.msOrientation; 
-      screen.orientation.lock("landscape-primary");
-
+      await document.body.requestFullscreen();
+      await screen.orientation.lock("landscape");
       // transform: rotate(90 deg)
     };
 
