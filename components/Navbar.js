@@ -7,7 +7,7 @@ const NavbarComponent = () => {
       <div>
         <Navbar bg="light" expand="lg">
         <Container>
-            <Navbar.Brand href="/">Meteorologia</Navbar.Brand>
+            <Navbar.Brand href="/">Qualidade do ar na Marinha Grande</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
@@ -15,7 +15,6 @@ const NavbarComponent = () => {
                 <Nav.Link href="/temperatura">Temperatura</Nav.Link>
                 <Nav.Link href="/humidade">Humidade</Nav.Link>
                 <Nav.Link href="/particulas">Particulas</Nav.Link>
-                <Nav.Link href="/pressao">Pressão atmosférica</Nav.Link>
             </Nav>
             </Navbar.Collapse>
         </Container>

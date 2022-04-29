@@ -6,7 +6,6 @@ import { Chart as ChartJS } from 'chart.js/auto'
 import axios from 'axios';
 
 const getData = async () => {
-
     const currentDate = Math.floor(new Date(Date.now())/1000) 
     let yesterday = new Date();
     yesterday.setHours(0,0,0,1);
@@ -18,8 +17,7 @@ const getData = async () => {
         data.datasets[1].data.push(res.p2)
         data.datasets[2].data.push(res.t)
         data.datasets[3].data.push(res.h)
-        // data.datasets[4].data.push((res.p).toFixed(2))
-        data.labels.push(new Date( res.time *1000).toLocaleString())
+        data.labels.push(new Date(res.time *1000).toLocaleString().split(',')[1])
     }
 
 }
@@ -46,7 +44,8 @@ const data = {
             data: [],
             fill: false,
             borderColor: 'rgb(255, 69, 192)',
-            tension: 0.1
+            tension: 0.1,
+
         },
         {
             label: 'Humidade',
@@ -68,17 +67,16 @@ const data = {
 const ChartViewer = () => {
     useEffect(() => {
         getData()
-
     }, []);
     return (
     <div>
-        <h3 className="title text-center" style={{marginTop: "1.5rem"}}>Informações detalhadas</h3>
+        <h3 className="title text-center" style={{marginTop: "1.5rem"}}>Informações detalhadas de {new Date().toLocaleDateString()}</h3>
         <Line
         data={data}
-        height={30+"%"}
-        width={80+"%"}
         style={{flex:1,justifyContent:'center',alignItems: 'center',  textAlign: 'center'}}
         options={{
+            font: 12,
+            animations: false,
             responsive: true,
             maintainAspectRatio: true
         }}
