@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ChartViewer from "../components/chart";
 import { useRouter } from 'next/router';
+import Script from 'next/dist/client/script';
 import { BrowserView, isBrowser, MobileView} from 'react-device-detect';
 
 
@@ -27,6 +28,7 @@ const Home = () => {
     fetchPosts()
   }, []);
   return (
+
     <div>
       <div id="temperature_display" className="text-center mt-auto col-12 mb-3 mb-sm-0">
         <h1 className="text-center">Temperatura atual: {temperature && temperature}ºC</h1>
@@ -38,10 +40,11 @@ const Home = () => {
           onClick={() => router.reload(window.location.pathname)}
         >Atualizar dados</button>
       </div>
-      <div style={{width:'100%', height:'80vh'}} id="chart">
+      <div style={{width:'100%', height:'80vh'}} id="chart" className="mb-9">
       {(isBrowser) ? <ChartViewer/> : (orientation === "landscape-secondary" || orientation === "landscape-primary") ? <ChartViewer/>: <div className="d-flex justify-content-center">Rode o seu dispositivo e atualize a página para visualizar o gráfico<br/><button className="btn btn-danger" onClick={() => router.reload(window.location.pathname)}>Atualizar a página</button></div>}
       </div>
-        
+      
+
     </div>
   );
 };
