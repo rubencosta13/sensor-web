@@ -1,5 +1,4 @@
 import { Container, Row, Col } from "react-bootstrap";
-import styles from './global-style.module.css'
 
 
 const Footer = () => {

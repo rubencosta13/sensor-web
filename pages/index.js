@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ChartViewer from "../components/chart";
-import styles from '../components/global-style.module.css';
 import { useRouter } from 'next/router';
 import { BrowserView, isBrowser, MobileView} from 'react-device-detect';
 
