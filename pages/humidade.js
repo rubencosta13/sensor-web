@@ -3,7 +3,7 @@ const Humidade = () => {
         <div className="container">
             <h2 className="text-center">A Humidade</h2>
             <div>
-                A humidade é associada à quantidade de vapor de água existente no ar. No nosso sensor, esta, é medida em percentagem. Senso a contagem feita de minuto a minuto
+                A humidade é associada à quantidade de vapor de água existente no ar. No nosso sensor, esta, é medida em percentagem. A contagem é feita de minuto a minuto
             </div>
             <h3 className="text-center mt-5">Sensor responsavel</h3>
             <div>

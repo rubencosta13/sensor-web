@@ -82,6 +82,7 @@ const ChartViewer = () => {
         style={{flex:1,justifyContent:'center',alignItems: 'center',  textAlign: 'center'}}
         options={{
             font: 12,
+            parsing: false,
             animations: false,
             responsive: true,
             maintainAspectRatio: true
