@@ -13,8 +13,13 @@ const getData = async (setCss) => {
     yesterday = Math.floor(yesterday.valueOf()/1000)
     try {
         const sensorData = await axios.post(`https://h2801469.stratoserver.net/get.php?id=2475238&from=${yesterday}&to=${currentDate}&minimize=false&with_gps=true&with_note=true`)
-        const result = sensorData.data
+        if (sensorData) {
+            console.log("> Data gathered, loading graph...")
             setCss("")
+        }else{
+            throw new Error("> Erro ao obter dados... ")
+        }
+        const result = sensorData.data
         for (const res of result) {
             data.datasets[0].data.push(res.p1)
             data.datasets[1].data.push(res.p2)
@@ -24,10 +29,9 @@ const getData = async (setCss) => {
         }
     } catch (err) {
         console.log("> Retrieving data failed...\nSecond Attempt");
-        console.error(err)
         setTimeout(() => {
             getData();
-        },1000)
+        },1500)
     }
     console.log("> Data retrieved and sanitized ✅");
 }
@@ -95,6 +99,14 @@ const ChartViewer = () => {
                 maintainAspectRatio: true
             }}
             />
+        </div>
+        <div className='footer'>
+            <footer className="bg-light text-center text-lg-start">
+            <div className="text-center p-3" style={{"backgroundColor": "#00001"  }}>
+                © 2022 Copyright: &nbsp;
+                <a className="text-dark" href="https://github.com/rubencosta13">Rúben Costa</a>
+            </div>
+            </footer>
         </div>
     </div>
     );
