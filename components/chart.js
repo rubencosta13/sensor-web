@@ -5,7 +5,7 @@ import { Chart as ChartJS } from 'chart.js/auto'
 
 import axios from 'axios';
 
-const getData = async () => {
+const getData = async (setCss) => {
     console.log("> Retrieving data...")
     const currentDate = Math.floor(new Date(Date.now())/1000) 
     let yesterday = new Date();
@@ -14,6 +14,7 @@ const getData = async () => {
     try {
         const sensorData = await axios.post(`https://h2801469.stratoserver.net/get.php?id=2475238&from=${yesterday}&to=${currentDate}&minimize=false&with_gps=true&with_note=true`)
         const result = sensorData.data
+            setCss("")
         for (const res of result) {
             data.datasets[0].data.push(res.p1)
             data.datasets[1].data.push(res.p2)
@@ -23,7 +24,10 @@ const getData = async () => {
         }
     } catch (err) {
         console.log("> Retrieving data failed...\nSecond Attempt");
-        getData();
+        console.error(err)
+        setTimeout(() => {
+            getData();
+        },1000)
     }
     console.log("> Data retrieved and sanitized ✅");
 }
@@ -71,23 +75,27 @@ const data = {
 }
 
 const ChartViewer = () => {
+    const [css, setCss] = useState("spinner-border");
     useEffect(() => {
-        getData()
+        getData(setCss)
     }, []);
     return (
-    <div>
+    <div>   
         <h3 className="title text-center" style={{marginTop: "1.5rem"}}>Informações detalhadas de {new Date().toLocaleDateString()}</h3>
-        <Line
-        data={data}
-        style={{flex:1,justifyContent:'center',alignItems: 'center',  textAlign: 'center'}}
-        options={{
-            font: 12,
-            parsing: true,
-            animations: true,
-            responsive: true,
-            maintainAspectRatio: true
-        }}
-        />
+            <br></br>
+        <div className={css} role="status">
+            <Line
+            data={data}
+            style={{flex:1,justifyContent:'center',alignItems: 'center',  textAlign: 'center'}}
+            options={{
+                font: 12,
+                parsing: true,
+                animations: true,
+                responsive: true,
+                maintainAspectRatio: true
+            }}
+            />
+        </div>
     </div>
     );
 };
