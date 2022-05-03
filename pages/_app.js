@@ -10,7 +10,8 @@ const MyApp = ({Component, pageProps}) => {
     return (
         <div>
             <Head>
-                
+                <meta property="og:title" content="Qualidade do ar na Marinha Grande"/>
+                <meta property="og:description" content="Plataforma de monitorização da qualidade do ar na Marinha Grande, Leiria. Sensor de monitorização da escola Secundária Pinhal do Rei"/>
                 <meta name="title" content="Qualidade do ar na Marinha Grande"/>
                 <meta name="description" content="Plataforma de monitorização da qualidade do ar na Marinha Grande, Leiria. Sensor de monitorização da escola Secundária Pinhal do Rei"/>
                 <meta name="keywords" content="Qualidade do Ar, Marinha Grande, IPMA, leiria, sensor de particulas, ESPR, pinhal do rei"/>
