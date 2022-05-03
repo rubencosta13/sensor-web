@@ -32,7 +32,8 @@ const Home = () => {
 
     <div>
       <div id="temperature_display" className="text-center mt-auto col-12 mb-3 mb-sm-0">
-        <h1 className="text-center">Temperatura atual: {temperature && temperature}ºC</h1>
+        <h1 className="text-center">Qualidade do ar na Marinha Grande</h1>
+        <h2 className="text-center">Temperatura atual: {temperature && temperature}ºC</h2>
         <div className="text-center">Dados de: {new Date( timestamp *1000).toLocaleString()}</div>
       </div>
       <div className="d-flex justify-content-center">
