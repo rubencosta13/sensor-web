@@ -8,6 +8,7 @@ import { BrowserView, isBrowser, MobileView} from 'react-device-detect';
 
 const Home = () => {
   const [orientation, setOrientation] = useState(null);
+  const [transformCss, setTransformCss] = useState("rotate(0)");
   const router = useRouter();
   const [temperature, setTemperature] = useState(null);
   const [timestamp, setTimestamp] = useState(null);
@@ -41,7 +42,7 @@ const Home = () => {
         >Atualizar dados</button>
       </div>
       <div style={{width:'100%', height:'80vh'}} id="chart" className="mb-9">
-      {(isBrowser) ? <ChartViewer/> : (orientation === "landscape-secondary" || orientation === "landscape-primary") ? <ChartViewer/>: <div className="d-flex justify-content-center">Rode o seu dispositivo e atualize a página para visualizar o gráfico<br/><button className="btn btn-danger" onClick={() => router.reload(window.location.pathname)}>Atualizar a página</button></div>}
+        <ChartViewer />
       </div>
     </div>
   );
