@@ -25,7 +25,8 @@ const index = () => {
             <div className="col-md-6">
                 <img
                 src="https://i.imgur.com/GeX7i0I.jpeg"
-                alt="Picture of the sensor"
+                alt="Sensor's Image"
+                loading='lazy'
                 style={{"width": "100%", "height": "auto"}}
                 className='img-fluid'
             />   
@@ -33,7 +34,8 @@ const index = () => {
             <div className="col-md-6">
                 <img
                     src="https://sensor.community/docs/airrohr/sds011-jammed-into-tube.jpeg"
-                    alt="Picture of the sensor"
+                    loading='lazy'
+                    alt="Sensor's Image"
                     style={{"width": "100%", "height": "auto"}}
                     className='img-fluid'
                 /><div>Imagem por: <a href="https://sensor.community/en/sensors/airrohr/">Sensor Community</a></div> 

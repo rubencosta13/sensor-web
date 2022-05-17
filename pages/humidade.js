@@ -11,6 +11,7 @@ const Humidade = () => {
                 <img 
                     src="https://www.distrelec.de/Web/WebShopImages/landscape_large/2-/01/Adafruit-2652-30091192-01.jpg"
                     alt="Picture of the sensor"
+                    loading="lazy"
                     style={{"width": "100%", "height": "auto"}}
                     className='img-fluid'
                 />
