@@ -1,10 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2'
-import { Chart as ChartJS } from 'chart.js/auto'
+import Chart from 'chart.js/auto'
+import annotationPlugin from 'chartjs-plugin-annotation';
+Chart.register(annotationPlugin);
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 import axios from 'axios';
 
 const getData = async (setCss) => {
@@ -16,6 +17,7 @@ const getData = async (setCss) => {
     yesterday = Math.floor(yesterday.valueOf()/1000)
     try {
         const sensorData = await axios.post(`https://h2801469.stratoserver.net/get.php?id=2475238&from=${yesterday}&to=${currentDate}&minimize=false&with_gps=true&with_note=true`)
+        console.log(sensorData)
         if (sensorData) {
             console.log("> Data gathered, loading graph...")
             setCss("")
@@ -110,15 +112,10 @@ const ChartViewer = () => {
             <br></br>
         <ToastContainer />
         <div className={css} role="status">
-            <Line
+        <Line
             data={data}
-            // @ts-ignore //
-            style={{flex:1,justifyContent:'center',alignItems: 'center',  textAlign: 'center' }}
+            style={{flex:1,justifyContent:'center',alignItems: 'center',  textAlign: 'center', transform: [{ rotate: 30}]}}
             options={{
-                font: {
-                    size: 12
-                },
-                parsing: false,
                 responsive: true,
                 maintainAspectRatio: true
             }}
