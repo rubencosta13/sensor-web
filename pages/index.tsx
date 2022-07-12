@@ -13,6 +13,7 @@ const Home = () => {
   const [temperature, setTemperature] = useState(null);
   const [timestamp, setTimestamp] = useState(null);
   const fetchPosts = async () => {
+    // @ts-ignore
     const currentDate = Math.floor(new Date(Date.now()) / 1000) ;
     
     try {
@@ -21,10 +22,12 @@ const Home = () => {
       setTimestamp(data.data[data.data.length -1].time);
     } catch(err) {
       console.log("> Error found...\nReloading Page...");
+      // @ts-ignore
       router.reload(window.location.pathname);
     }
   };
   useEffect(() => {
+    // @ts-ignore
     setOrientation((screen.orientation || {}).type || screen.mozOrientation || screen.msOrientation);
     fetchPosts()
   }, []);
@@ -39,6 +42,7 @@ const Home = () => {
       <div className="d-flex justify-content-center">
         <button
           className="btn btn-success"
+          // @ts-ignore
           onClick={() => router.reload(window.location.pathname)}
         >Atualizar dados</button>
       </div>

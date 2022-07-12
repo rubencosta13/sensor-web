@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Head from 'next/head';
 import Layout from '../components/Layout';
-import Script from 'next/dist/client/script';
 import 'bootstrap/dist/css/bootstrap.css';
 import GoogleAnalytics from "@bradgarropy/next-google-analytics"
 
@@ -22,6 +21,7 @@ const MyApp = ({Component, pageProps}) => {
                 <meta name="author" content="Ruben Lavos Costa"/>
                 <link rel="shortcut icon" href="https://www.cm-mgrande.pt/assets/cmmgrande/cmmgrande/images/favicon.ico" />
                 <title>Qualidade do ar na Marinha Grande</title>
+                <meta name="google-site-verification" content="01GcahiJ-eCHp7RzZLZ8M_GXL_bg1jSX9oFgouFGpUA" />
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
             </Head>
             <Layout>

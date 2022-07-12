@@ -9,8 +9,9 @@ import axios from 'axios';
 
 const getData = async (setCss) => {
     console.log("> Retrieving data...")
-    const currentDate = Math.floor(new Date(Date.now())/1000) 
-    let yesterday = new Date();
+    // @ts-ignore
+    const currentDate: any = Math.floor(new Date(Date.now()) /1000)
+    let yesterday: any = new Date();
     yesterday.setHours(0,0,0,1);
     yesterday = Math.floor(yesterday.valueOf()/1000)
     try {
@@ -50,7 +51,7 @@ const getData = async (setCss) => {
         });       
         console.log("> Retrieving data failed...\nSecond Attempt");
         setTimeout(() => {
-            getData();
+            getData(setCss);
         },1500)
     }
     console.log("> Data retrieved and sanitized ✅");
@@ -98,7 +99,7 @@ const data = {
     ]
 }
 
-const ChartViewer = ({props}) => {    
+const ChartViewer = () => {    
     const [css, setCss] = useState("spinner-border");
     useEffect(() => {
         getData(setCss)
@@ -111,11 +112,13 @@ const ChartViewer = ({props}) => {
         <div className={css} role="status">
             <Line
             data={data}
-            style={{flex:1,justifyContent:'center',alignItems: 'center',  textAlign: 'center', transform: [{ rotate: 30}]}}
+            // @ts-ignore //
+            style={{flex:1,justifyContent:'center',alignItems: 'center',  textAlign: 'center' }}
             options={{
-                font: 12,
-                parsing: true,
-                animations: true,
+                font: {
+                    size: 12
+                },
+                parsing: false,
                 responsive: true,
                 maintainAspectRatio: true
             }}
