@@ -14,7 +14,6 @@ const MyApp = ({Component, pageProps}) => {
                 <meta name="title" content="Qualidade do ar na Marinha Grande"/>
                 <meta name="description" content="Plataforma de monitorização da qualidade do ar na Marinha Grande, Leiria. Sensor de monitorização da escola Secundária Pinhal do Rei"/>
                 <meta name="keywords" content="Qualidade do Ar, Marinha Grande, IPMA, leiria, sensor de particulas, ESPR, pinhal do rei"/>
-                <meta name="robots" content="index, follow"/>
                 <meta httpEquiv="Content-Type" content="text/html; charset=utf-8"/>
                 <meta name="language" content="Portuguese"/>
                 <meta name="revisit-after" content="2 days"/>
