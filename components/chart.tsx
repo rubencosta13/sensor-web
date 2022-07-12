@@ -114,7 +114,7 @@ const ChartViewer = () => {
         <div className={css} role="status">
         <Line
             data={data}
-            style={{flex:1,justifyContent:'center',alignItems: 'center',  textAlign: 'center', transform: [{ rotate: 30}]}}
+            style={{flex:1,justifyContent:'center',alignItems: 'center',  textAlign: 'center'}}
             options={{
                 responsive: true,
                 maintainAspectRatio: true
