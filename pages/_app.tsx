@@ -18,6 +18,7 @@ const MyApp = ({Component, pageProps}) => {
                 <meta name="language" content="Portuguese"/>
                 <meta name="revisit-after" content="2 days"/>
                 <meta name="author" content="Ruben Lavos Costa"/>
+                <meta name="yandex-verification" content="75168f966d0e5eee" />
                 <link rel="shortcut icon" href="https://www.cm-mgrande.pt/assets/cmmgrande/cmmgrande/images/favicon.ico" />
                 <title>Qualidade do ar na Marinha Grande</title>
                 <meta name="google-site-verification" content="01GcahiJ-eCHp7RzZLZ8M_GXL_bg1jSX9oFgouFGpUA" />
