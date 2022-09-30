@@ -25,6 +25,7 @@ const MyApp = ({Component, pageProps}) => {
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
             </Head>
             <Layout>
+                <div></div>
                 <GoogleAnalytics measurementId="G-KC26BBGRR9" />
                 <Component {...pageProps}/>
             </Layout>
