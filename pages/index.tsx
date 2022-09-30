@@ -22,6 +22,7 @@ const Home = () => {
       setTimestamp(data.data[data.data.length -1].time);
     } catch(err) {
       console.log("> Error found...\nReloading Page...");
+      console.error("> Error details: ", err);
       // @ts-ignore
       router.reload(window.location.pathname);
     }
