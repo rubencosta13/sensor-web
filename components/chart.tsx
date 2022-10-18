@@ -17,7 +17,7 @@ const getData = async (setCss) => {
     yesterday = Math.floor(yesterday.valueOf()/1000)
     try {
         const sensorData = await axios.post(`https://h2801469.stratoserver.net/get.php?id=2475238&from=${yesterday}&to=${currentDate}&minimize=false&with_gps=true&with_note=true`)
-        if (!sensorData || sensorData.length < 0) 
+        if (!sensorData || sensorData.data.length < 0) 
             throw new Error("> Erro ao obter dados... ")
         console.log("> Data gathered, loading graph...")
             setCss("")
