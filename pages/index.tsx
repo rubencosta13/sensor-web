@@ -21,11 +21,11 @@ const Home = () => {
       setTemperature(data.data[data.data.length -1].t);
       setTimestamp(data.data[data.data.length -1].time);
     } catch(err) {     
-      console.group();
-        console.log("> Error found...\nReloading Page...");
+      console.group('> Error found');
         console.error("> Error details: ", err);
       console.groupEnd();
       toast.error("Ocorreu um erro ao tentar receber dados!");
+      return;
     }
   };
   useEffect(() => {
