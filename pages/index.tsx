@@ -12,7 +12,7 @@ const Home = () => {
   const router = useRouter();
   const [temperature, setTemperature] = useState(null);
   const [timestamp, setTimestamp] = useState(null);
-  const fetchPosts = async () => {
+  const fetchData = async () => {
     // @ts-ignore
     const currentDate = Math.floor(new Date(Date.now()) / 1000);
     
@@ -25,13 +25,12 @@ const Home = () => {
         console.error("> Error details: ", err);
       console.groupEnd();
       toast.error("Ocorreu um erro ao tentar receber dados!");
-      return;
     }
   };
   useEffect(() => {
     // @ts-ignore
     setOrientation((screen.orientation || {}).type || screen.mozOrientation || screen.msOrientation);
-    fetchPosts()
+    fetchData();
   }, []);
   return (
 
