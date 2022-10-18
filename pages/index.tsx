@@ -25,7 +25,7 @@ const Home = () => {
       toast.success('Dados obtidos com sucesso!');
     } catch(err) {     
       console.groupCollapsed('> Error found');
-        console.error("> Error details: ", err);
+        console.error("> Error details: ", err.message);
       console.groupEnd();
       toast.error("Ocorreu um erro ao tentar receber dados!");
     }
