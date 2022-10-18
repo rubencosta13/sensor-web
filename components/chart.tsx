@@ -23,26 +23,27 @@ const getData = async (setCss) => {
             console.log(sensorData.data);
             console.groupEnd();
             throw new Error("> Erro ao obter dados... ")
+        } else {
+            console.log("> Data gathered, loading graph...")
+            setCss("")
+            const result = sensorData.data
+            for (const res of result) {
+                data.datasets[0].data.push(res.p1)
+                data.datasets[1].data.push(res.p2)
+                data.datasets[2].data.push(res.t)
+                data.datasets[3].data.push(res.h)
+                data.labels.push(new Date(res.time *1000).toLocaleString().split(',')[1])
+            }
+            toast.success('Dados obtidos...', {
+                position: "top-right",
+                autoClose: 4000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });  
         }
-        console.log("> Data gathered, loading graph...")
-        setCss("")
-        const result = sensorData.data
-        for (const res of result) {
-            data.datasets[0].data.push(res.p1)
-            data.datasets[1].data.push(res.p2)
-            data.datasets[2].data.push(res.t)
-            data.datasets[3].data.push(res.h)
-            data.labels.push(new Date(res.time *1000).toLocaleString().split(',')[1])
-        }
-        toast.success('Dados obtidos...', {
-            position: "top-right",
-            autoClose: 4000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-        });  
     } catch (err) {
         toast.error('Erro ao obter os dados...', {
             position: "top-right",
