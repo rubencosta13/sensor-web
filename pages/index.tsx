@@ -20,6 +20,7 @@ const Home = () => {
       const data = await axios.post(`https://h2801469.stratoserver.net/get.php?id=2475238&from=${currentDate-1000}&to=${currentDate}&minimize=false&with_gps=true&with_note=true`);
       setTemperature(data.data[data.data.length -1].t);
       setTimestamp(data.data[data.data.length -1].time);
+      toast.success('Dados obtidos com sucesso!');
     } catch(err) {     
       console.group('> Error found');
         console.error("> Error details: ", err);

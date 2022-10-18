@@ -4,8 +4,6 @@ import { Line } from 'react-chartjs-2'
 import Chart from 'chart.js/auto'
 import annotationPlugin from 'chartjs-plugin-annotation';
 Chart.register(annotationPlugin);
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 
 const getData = async (setCss) => {
@@ -34,26 +32,8 @@ const getData = async (setCss) => {
                 data.datasets[3].data.push(res.h)
                 data.labels.push(new Date(res.time *1000).toLocaleString().split(',')[1])
             }
-            toast.success('Dados obtidos...', {
-                position: "top-right",
-                autoClose: 4000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });  
         }
-    } catch (err) {
-        toast.error('Erro ao obter os dados...', {
-            position: "top-right",
-            autoClose: 4000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-        });       
+    } catch (err) { 
         console.log("> Retrieving data failed...\nSecond Attempt");
         setTimeout(() => {
             getData(setCss);
@@ -113,7 +93,6 @@ const ChartViewer = () => {
     <div>   
         <h3 className="title text-center" style={{marginTop: "1.5rem"}}>Informações detalhadas de {new Date().toLocaleDateString()}</h3>
             <br></br>
-        <ToastContainer />
         <div className={css} role="status">
         <Line
             data={data}
