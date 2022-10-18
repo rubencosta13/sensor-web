@@ -5,6 +5,8 @@ import { useRouter } from 'next/router';
 import Script from 'next/dist/client/script';
 import { BrowserView, isBrowser, MobileView} from 'react-device-detect';
 import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const Home = () => {
   const [orientation, setOrientation] = useState(null);

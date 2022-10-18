@@ -4,6 +4,8 @@ import { Line } from 'react-chartjs-2'
 import Chart from 'chart.js/auto'
 import annotationPlugin from 'chartjs-plugin-annotation';
 Chart.register(annotationPlugin);
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 
 const getData = async (setCss) => {
