@@ -24,7 +24,7 @@ const Home = () => {
       setTimestamp(data.data[data.data.length -1].time);
       toast.success('Dados obtidos com sucesso!');
     } catch(err) {     
-      console.group('> Error found');
+      console.groupCollapsed('> Error found');
         console.error("> Error details: ", err);
       console.groupEnd();
       toast.error("Ocorreu um erro ao tentar receber dados!");
