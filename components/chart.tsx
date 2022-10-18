@@ -18,7 +18,7 @@ const getData = async (setCss) => {
     try {
         const sensorData = await axios.post(`https://h2801469.stratoserver.net/get.php?id=2475238&from=${yesterday}&to=${currentDate}&minimize=false&with_gps=true&with_note=true`)
         console.groupCollapsed('> Raw data');
-        console.log(sensorData.data);
+        console.log(sensorData);
         console.groupEnd();
         if (sensorData.data.length = 0) {
             console.group();
