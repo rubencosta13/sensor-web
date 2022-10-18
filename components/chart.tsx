@@ -20,7 +20,7 @@ const getData = async (setCss) => {
         console.groupCollapsed('> Raw data');
         console.log(sensorData);
         console.groupEnd();
-        if (sensorData.data.length = 0) {
+        if (!sensorData) {
             console.group();
             console.log('Data: ');
             console.log(sensorData.data);
