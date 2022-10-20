@@ -35,7 +35,7 @@ const getData = async (setCss) => {
                 data.datasets[1].data.push(res.p2);
                 data.datasets[2].data.push(res.t);
                 data.datasets[3].data.push(res.h);
-                data.datasets[4].data.push(res.p / 1000);
+                data.datasets[4].data.push((res.p / 1000).toFixed(2));
                 data.labels.push(new Date(res.time *1000).toLocaleString().split(',')[1])
             }
         }
