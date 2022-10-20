@@ -5,6 +5,7 @@
   "main": "date.js",
   "scripts": {
     "start": "next",
+    "dev": "next dev",
     "analyze": "cross-env ANALYZE=true next build"
   },
   "keywords": [],

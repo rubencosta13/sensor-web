@@ -31,10 +31,11 @@ const getData = async (setCss) => {
             setCss("")
             const result = sensorData.data
             for (const res of result) {
-                data.datasets[0].data.push(res.p1)
-                data.datasets[1].data.push(res.p2)
-                data.datasets[2].data.push(res.t)
-                data.datasets[3].data.push(res.h)
+                data.datasets[0].data.push(res.p1);
+                data.datasets[1].data.push(res.p2);
+                data.datasets[2].data.push(res.t);
+                data.datasets[3].data.push(res.h);
+                data.datasets[4].data.push(res.p / 1000);
                 data.labels.push(new Date(res.time *1000).toLocaleString().split(',')[1])
             }
         }
@@ -52,6 +53,7 @@ const data = {
     datasets: [
         {
             label: 'PM 10',
+            measurement: 'μg/m3',
             data: [],
             fill: false,
             borderColor: 'rgb(75, 192, 192)',
@@ -59,6 +61,7 @@ const data = {
         },
         {
             label: 'PM 2.5',
+            measurement: 'μg/m3',
             data: [],
             fill: false,
             borderColor: 'rgb(75, 69, 192)',
@@ -66,6 +69,7 @@ const data = {
         },
         {
             label: 'Temperatura',
+            measurement: 'º.C',
             data: [],
             fill: false,
             borderColor: 'rgb(255, 69, 192)',
@@ -74,18 +78,20 @@ const data = {
         },
         {
             label: 'Humidade',
+            measurement: '%',
             data: [],
             fill: false,
             borderColor: 'rgb(0, 123, 254)',
             tension: 0.1
+        },
+        {
+            label: "Pressão",
+            measurement: 'kPa',
+            data: [],
+            fill: false,
+            borderColor: 'rgb(255, 255, 90)',
+            tension: 0.1
         }
-        // {
-        //     label: "Pressão",
-        //     data: [],
-        //     fill: false,
-        //     borderColor: 'rgb(255, 255, 90)',
-        //     tension: 0.1
-        // }
     ]
 }
 
@@ -104,7 +110,31 @@ const ChartViewer = () => {
             style={{flex:1,justifyContent:'center',alignItems: 'center',  textAlign: 'center'}}
             options={{
                 responsive: true,
-                maintainAspectRatio: true
+                maintainAspectRatio: true,
+                animation: false,
+                spanGaps: true,
+                showLine: true,    
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            // @ts-ignore
+                            label: function(context) {
+                                let label = context.dataset.label;
+                                const measurements = {
+                                    'PM 10': ' μg/m3',
+                                    'PM 2.5': ' μg/m3',
+                                    'Temperatura': 'ºC',
+                                    'Humidade': '%',
+                                    'Pressão': ' kPa'
+                                }
+                                if (label) {
+                                    label += `: ${context.parsed.y}${measurements[label]}`
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
             }}
             />
         </div>
