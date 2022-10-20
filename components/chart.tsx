@@ -21,9 +21,8 @@ const getData = async (setCss) => {
         console.log(sensorData);
         console.groupEnd();
         if (!sensorData) {
-            console.group();
-            console.log('Data: ');
-            console.log(sensorData.data);
+            console.groupCollapsed();
+            console.log(">Raw data");
             console.groupEnd();
             throw new Error("> Erro ao obter dados... ")
         } else {
@@ -53,7 +52,7 @@ const data = {
     datasets: [
         {
             label: 'PM 10',
-            measurement: 'μg/m3',
+            measurement: ' μg/m3',
             data: [],
             fill: false,
             borderColor: 'rgb(75, 192, 192)',
@@ -61,7 +60,7 @@ const data = {
         },
         {
             label: 'PM 2.5',
-            measurement: 'μg/m3',
+            measurement: ' μg/m3',
             data: [],
             fill: false,
             borderColor: 'rgb(75, 69, 192)',
@@ -69,7 +68,7 @@ const data = {
         },
         {
             label: 'Temperatura',
-            measurement: 'º.C',
+            measurement: 'ºC',
             data: [],
             fill: false,
             borderColor: 'rgb(255, 69, 192)',
@@ -86,7 +85,7 @@ const data = {
         },
         {
             label: "Pressão",
-            measurement: 'kPa',
+            measurement: ' kPa',
             data: [],
             fill: false,
             borderColor: 'rgb(255, 255, 90)',
@@ -120,15 +119,9 @@ const ChartViewer = () => {
                             // @ts-ignore
                             label: function(context) {
                                 let label = context.dataset.label;
-                                const measurements = {
-                                    'PM 10': ' μg/m3',
-                                    'PM 2.5': ' μg/m3',
-                                    'Temperatura': 'ºC',
-                                    'Humidade': '%',
-                                    'Pressão': ' kPa'
-                                }
+                                const labelData = data.datasets.filter(data => data.label == label);
                                 if (label) {
-                                    label += `: ${context.parsed.y}${measurements[label]}`
+                                    label += `: ${context.parsed.y}${labelData[0].measurement}`
                                 }
                                 return label;
                             }
