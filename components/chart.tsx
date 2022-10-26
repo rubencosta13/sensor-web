@@ -1,53 +1,27 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy } from 'react';
 import { Line } from 'react-chartjs-2'
 import Chart from 'chart.js/auto'
 import annotationPlugin from 'chartjs-plugin-annotation';
 Chart.register(annotationPlugin);
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 
-const getData = async (setCss) => {
-    console.log("> Retrieving data...")
-    // @ts-ignore
-    const currentDate: any = Math.floor(new Date(Date.now()) /1000)
-    let yesterday: any = new Date();
-    yesterday.setHours(0,0,0,1);
-    yesterday = Math.floor(yesterday.valueOf()/1000)
-    try {
-        const sensorData = await axios.post(`https://h2801469.stratoserver.net/get.php?id=2475238&from=${yesterday}&to=${currentDate}&minimize=false&with_gps=true&with_note=true`)
-        console.groupCollapsed('> Raw data');
-        console.log(sensorData);
-        console.groupEnd();
-        if (!sensorData) {
-            console.groupCollapsed();
-            console.log(">Raw data");
-            console.groupEnd();
-            throw new Error("> Erro ao obter dados... ")
-        } else {
-            console.log("> Data gathered, loading graph...")
-            setCss("")
-            const result = sensorData.data
-            for (const res of result) {
-                data.datasets[0].data.push(res.p1);
-                data.datasets[1].data.push(res.p2);
-                data.datasets[2].data.push(res.t);
-                data.datasets[3].data.push(res.h);
-                data.datasets[4].data.push((res.p / 1000).toFixed(2));
-                data.labels.push(new Date(res.time *1000).toLocaleString().split(',')[1])
-            }
-        }
-    } catch (err) { 
-        console.log("> Retrieving data failed...\nSecond Attempt");
-        setTimeout(() => {
-            getData(setCss);
-        },1500)
-    }
-    console.log("> Data retrieved and sanitized ✅");
+interface params {
+    setCss?: string;
+    data: any;
+    date: any;
+};
+interface dataParams {
+    p1: number;
+    p2: number;
+    t: number;
+    h: number;
+    p: number;
+    time: number;
 }
 
-const data = {
+const dataForm = {
     labels: [],
     datasets: [
         {
@@ -92,12 +66,32 @@ const data = {
             tension: 0.1
         }
     ]
+};
+
+const dataPlotter = (data: Array<dataParams>) => {
+    for (const values of data) {
+        dataForm.datasets[0].data.push(values.p1);
+        dataForm.datasets[1].data.push(values.p2);
+        dataForm.datasets[2].data.push(values.t);
+        dataForm.datasets[3].data.push(values.h);
+        dataForm.datasets[4].data.push(Math.floor((values.p / 1000)).toFixed(2));
+        dataForm.labels.push(new Date(values.time *1000).toLocaleString().split(',')[1])
+    }
+    return {
+        dataForm
+    }
 }
 
-const ChartViewer = () => {    
+const ChartViewer = ({ data }: params) => {    
     const [css, setCss] = useState("spinner-border");
+    const [chartData, setChartData] = useState(dataForm)
     useEffect(() => {
-        getData(setCss)
+        if (data) {
+            setCss('');
+            const values = dataPlotter(data).dataForm;
+            // console.log(data);
+            setChartData(values)
+        }
     }, []);
     return (
     <div>   
@@ -105,7 +99,7 @@ const ChartViewer = () => {
             <br></br>
         <div className={css} role="status">
         <Line
-            data={data}
+            data={chartData}
             style={{flex:1,justifyContent:'center',alignItems: 'center',  textAlign: 'center'}}
             options={{
                 responsive: true,
@@ -119,7 +113,7 @@ const ChartViewer = () => {
                             // @ts-ignore
                             label: function(context) {
                                 let label = context.dataset.label;
-                                const labelData = data.datasets.filter(data => data.label == label);
+                                const labelData = dataForm.datasets.filter(data => data.label == label);
                                 if (label) {
                                     label += `: ${context.parsed.y}${labelData[0].measurement}`
                                 }

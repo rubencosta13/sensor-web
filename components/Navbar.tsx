@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import {Navbar, Container, Nav } from 'react-bootstrap';
 
 const NavbarComponent = () => {
-    
     return ( 
       <div>
         <Navbar bg="light" expand="lg">
