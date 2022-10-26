@@ -4,7 +4,6 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 const path = require('path')
 const glob = require('glob')
-const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const PurgecssPlugin = require('purgecss-webpack-plugin')
 
@@ -15,8 +14,15 @@ const cssOutput = 'site.css'
 const withCss = require("@zeit/next-css");
 const withPurgeCss = require("next-purgecss");
 
+module.exports = {
+  compiler: {
+    styledComponents: true | {
+      minify: true
+    },
+  }
+};
 
-module.exports = (env) => {    
+module.exports = (env) => { 
   return [{
       entry: entry,
       output: {
@@ -65,37 +71,9 @@ module.exports = withCss(withPurgeCss({
 }));
 
 module.exports = withBundleAnalyzer({
-    webpackDevMiddleware: (config) => {
-      config.watchOptions.poll = 300;
-      return config;
-    },
-    images: {
-      domains: ['i.imgur.com', 'sensor.community'],
-    },
-    "plugins": [
-      "postcss-flexbugs-fixes",
-      [
-        "postcss-preset-env",
-        {
-          "autoprefixer": {
-            "flexbox": "no-2009"
-          },
-          "stage": 3,
-          "features": {
-            "custom-properties": false
-          }
-        }
-      ],
-      [
-        '@fullhuman/postcss-purgecss',
-        {
-          content: [
-              './pages/**/*.{js,jsx,ts,tsx}',
-              './components/**/*.{js,jsx,ts,tsx}'
-          ],
-          defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || [],
-          safelist: ["html", "body"]
-        }
-      ],
-    ]
+  images: {
+    domains: ['i.imgur.com', 'sensor.community'],
+  },
+  swcMinify: true, 
+  optimizeFonts: true,
 });
