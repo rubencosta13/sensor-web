@@ -4,7 +4,6 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 const path = require('path')
 const glob = require('glob')
-const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const PurgecssPlugin = require('purgecss-webpack-plugin')
 
