@@ -1,0 +1,47 @@
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+	enabled: process.env.ANALYZE === 'true',
+});
+
+const withPurgeCss = require('next-purgecss');
+
+const path = require('path');
+const glob = require('glob');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const PurgeCssPlugin = require('purgecss-webpack-plugin');
+
+const outputDir = 'dist';
+
+module.exports = withBundleAnalyzer(
+	withPurgeCss({
+		purgeCssPaths: ['pages/**/*', 'components/**/*'],
+		purgeCssEnabled: ({ dev, isServer }) => !dev && !isServer, // Only enable PurgeCSS for client-side production builds
+		webpack: (config, { isServer, dev, buildId, config: { distDir } }) => {
+			// config.entry = './pages/_app.tsx';
+			config.mode = 'production';
+			config.output = {
+				path: path.join(__dirname, outputDir),
+				filename: '[name].js',
+			};
+			config.module.rules.push(
+				{
+					test: /\.js$/,
+					use: 'babel-loader',
+				},
+				{
+					test: /\.ts$/,
+					use: 'babel-loader',
+				},
+			);
+			return config;
+		},
+		images: {
+			domains: ['i.imgur.com', 'sensor.community'],
+		},
+		swcMinify: true,
+		optimizeFonts: true,
+		compress: true,
+		poweredByHeader: false,
+		generateEtags: false,
+		distDir: 'dist',
+	}),
+);
