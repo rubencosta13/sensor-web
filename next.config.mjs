@@ -1,7 +1,9 @@
 import TerserPlugin from 'terser-webpack-plugin';
-import CssMinimizerPlugin from 'mini-css-extract-plugin';
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import cssLoaderConfig from 'css-loader';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -11,12 +13,8 @@ export default {
 		{ buildId, dev, isServer, defaultLoaders, nextRuntime, webpack },
 	) => {
 		(config.mode = 'production'),
-			// config.module.rules.push({
-			// 	test: /\.css$/i,
-			// 	exclude: path.resolve(__dirname, 'node_modules'),
-			// 	use: ['style-loader', 'css-loader'],
-			// }),
 			config.plugins.push(
+				new MiniCssExtractPlugin(),
 				new webpack.DefinePlugin({
 					'process.env': {
 						// This has effect on the react lib size
