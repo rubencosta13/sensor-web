@@ -3,6 +3,9 @@ import Head from 'next/head';
 import Layout from '../components/Layout';
 import 'bootstrap/dist/css/bootstrap.css';
 import GoogleAnalytics from '@bradgarropy/next-google-analytics';
+import 'dotenv/config';
+
+const cache = new Map();
 
 const MyApp = ({ Component, pageProps }: any) => {
   return (
@@ -75,4 +78,5 @@ const MyApp = ({ Component, pageProps }: any) => {
   );
 };
 
+export { cache };
 export default MyApp;
