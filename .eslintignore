@@ -1,0 +1,5 @@
+*.mjs
+.next
+node_modules
+*.lock
+*.json

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
-//@ts-ignore
 import Chart from 'chart.js/auto';
 import annotationPlugin from 'chartjs-plugin-annotation';
 Chart.register(annotationPlugin);
@@ -8,8 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 interface params {
   setCss?: string;
-  data: any;
-  date?: any;
+  data: Array<dataParams>;
+  date?: Date;
 }
 interface dataParams {
   p1: number;
@@ -134,7 +133,8 @@ const ChartViewer = ({ data }: params) => {
             plugins: {
               tooltip: {
                 callbacks: {
-                  //@ts-ignore
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                  // @ts-ignore
                   label: (context) => {
                     let label = context.dataset.label;
                     const labelData = dataForm.datasets.filter(

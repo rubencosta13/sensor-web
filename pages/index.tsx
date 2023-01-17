@@ -18,7 +18,7 @@ const fetchData = async ({ setTemperature, setData }: FetchData) => {
   const todayTime: number = Math.floor(Date.now() / 1000);
   if (cache.get(`${yesterdayTime}-${todayTime}-chartData`)) {
     const data = cache.get(`${yesterdayTime}-${todayTime}-chartData`);
-    console.log(`> Smart implementation of cache!`);
+    console.log('> Smart implementation of cache!');
     setTemperature(data[data.length - 1].t);
     setData(data);
     toast.success('Dados obtidos com sucesso!');
@@ -45,7 +45,7 @@ const Home = () => {
   const router = useRouter();
   const [temperature, setTemperature] = useState(null);
   const [data, setData] = useState(null);
-  const [currentDate] = useState<any>(null);
+  const [currentDate] = useState<Date>();
 
   useEffect(() => {
     fetchData({ setTemperature, setData });

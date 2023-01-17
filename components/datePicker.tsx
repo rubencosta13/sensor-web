@@ -1,28 +1,40 @@
 import axios from 'axios';
-import { ReactNode, useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { CSVDownload, CSVLink } from 'react-csv';
-import { LinkProps } from 'react-csv/components/Link';
+import { CSVLink } from 'react-csv';
 import { cache } from 'pages/_app';
-import { addDays } from 'date-fns';
 
-interface FetchData {
-  setTemperature: React.Dispatch<React.SetStateAction<null>>;
-  setData: React.Dispatch<React.SetStateAction<null>>;
-}
-
-const generateCSV = ({ data, setData }: any) => {
-  return new Promise<void>((resolve, reject) => {
-    setData(data);
-    resolve(data);
-  });
+type GenerateCV = {
+  data: object[];
+  setData: (data: object[]) => void;
 };
 
-interface GetData {
-  startDate: Date;
-  endDate: Date;
+interface onChange {
+  dates: [Date | null, Date | null] | SetStateAction<Date>[];
+  setStartDate: Dispatch<SetStateAction<Date>>;
+  setEndDate: Dispatch<SetStateAction<Date>>;
+  startDate: Date | null;
+  endDate: Date | null;
+  data: object[];
+  setData: Dispatch<SetStateAction<object[]>>;
 }
+
+interface GetData {
+  startDate: Date | null;
+  endDate: Date | null;
+}
+
+const generateCSV = ({ data, setData }: GenerateCV) => {
+  return new Promise((resolve, reject) => {
+    try {
+      setData(data);
+      resolve(data);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
 
 const onChange = async ({
   dates,
@@ -30,38 +42,47 @@ const onChange = async ({
   setEndDate,
   startDate,
   endDate,
-  data,
   setData,
-}: any) => {
+}: onChange) => {
   const [start, end] = dates;
-  setStartDate(start);
-  setEndDate(end);
-  if (!end) {
-    return;
+  if (end && start) {
+    setStartDate(start);
+    setEndDate(end);
+    await getData({ startDate, endDate })
+      .then((data) => {
+        generateCSV({ data, setData });
+      })
+      .catch((err) => console.error(err));
   }
-  await getData({ startDate, endDate })
-    .then((data) => generateCSV({ data, setData }))
-    .catch((err) => console.error(err));
 };
 
 const getData = async ({ startDate, endDate }: GetData) => {
-  return new Promise<any>(async (resolve, _reject) => {
-    if (!cache.get(`${startDate}-${endDate}-data`)) {
-      const { data: requestData } = await axios.get(
-        `https://h2801469.stratoserver.net/get.php?id=2475238&from=${Math.floor(
-          startDate.setHours(0, 0, 0, 1) / 1000,
-        )}&to=${
-          endDate == null
-            ? Math.floor(new Date().getTime() / 1000)
-            : Math.floor(endDate.getTime() / 1000)
-        }&minimize=true&with_gps=false&with_note=false`,
-      );
-      cache.set(`${startDate}-${endDate}-data`, requestData);
-      resolve(requestData);
+  return new Promise<object[]>((resolve, reject) => {
+    if (!startDate) {
+      reject('No starting date was provided');
       return;
     }
-    console.log('> Cache');
-    resolve(cache.get(`${startDate}-${endDate}-data`));
+    const cacheKey = `${startDate}-${endDate}-data`;
+    if (cache.get(cacheKey)) {
+      console.log('> Cache');
+      resolve(cache.get(cacheKey));
+    } else {
+      axios
+        .get(
+          `https://h2801469.stratoserver.net/get.php?id=2475238&from=${Math.floor(
+            startDate.setHours(0, 0, 0, 1) / 1000,
+          )}&to=${
+            endDate == null
+              ? Math.floor(new Date().getTime() / 1000)
+              : Math.floor(endDate.getTime() / 1000)
+          }&minimize=true&with_gps=false&with_note=false`,
+        )
+        .then(({ data: requestData }) => {
+          cache.set(cacheKey, requestData);
+          resolve(requestData);
+        })
+        .catch(reject);
+    }
   });
 };
 
@@ -75,8 +96,8 @@ const headers = [
 ];
 
 const DatePickerElement = () => {
-  const [data, setData] = useState<Array<any>>([]);
-  const [startDate, setStartDate] = useState(new Date());
+  const [data, setData] = useState<Array<object>>([]);
+  const [startDate, setStartDate] = useState<Date>(new Date());
   const [endDate, setEndDate] = useState<Date>(new Date());
 
   return (
@@ -105,7 +126,7 @@ const DatePickerElement = () => {
           headers={headers}
           asyncOnClick={true}
           className="btn btn-primary"
-          filename={`sensor-espr-values.csv`}
+          filename={'sensor-espr-values.csv'}
           target="_blank"
         >
           Download Dados

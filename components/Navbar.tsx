@@ -2,7 +2,7 @@ import React from 'react';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 
 const NavbarComponent = () => {
-	return (
+  return (
     <div>
       <Navbar
         bg="light"

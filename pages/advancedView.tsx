@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import DatePicker from '../components/datePicker';
 
 const AdvancedViewer = () => {
-  const [date, setDate] = useState<string>();
   return (
     <div className="container justify-center text-center mb-10 col-12 mb-3 mb-sm-0">
       <h1>Exportar Dados</h1>
