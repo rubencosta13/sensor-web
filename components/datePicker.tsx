@@ -10,15 +10,6 @@ type GenerateCV = {
   setData: (data: object[]) => void;
 };
 
-interface onChange {
-  dates: [Date | null, Date | null] | SetStateAction<Date>[];
-  setStartDate: Dispatch<SetStateAction<Date>>;
-  setEndDate: Dispatch<SetStateAction<Date>>;
-  startDate: Date | null;
-  endDate: Date | null;
-  data: object[];
-  setData: Dispatch<SetStateAction<object[]>>;
-}
 
 interface GetData {
   startDate: Date | null;
@@ -43,17 +34,17 @@ const onChange = async ({
   startDate,
   endDate,
   setData,
-}: onChange) => {
+}: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+any) => {
   const [start, end] = dates;
-  if (end && start) {
-    setStartDate(start);
-    setEndDate(end);
-    await getData({ startDate, endDate })
-      .then((data) => {
-        generateCSV({ data, setData });
-      })
-      .catch((err) => console.error(err));
+  setStartDate(start);
+  setEndDate(end);
+  if (!end) {
+    return;
   }
+  await getData({ startDate, endDate })
+    .then((data) => generateCSV({ data, setData }))
+    .catch((err) => console.error(err));
 };
 
 const getData = async ({ startDate, endDate }: GetData) => {
@@ -97,8 +88,8 @@ const headers = [
 
 const DatePickerElement = () => {
   const [data, setData] = useState<Array<object>>([]);
-  const [startDate, setStartDate] = useState<Date>(new Date());
-  const [endDate, setEndDate] = useState<Date>(new Date());
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
 
   return (
     <div>
