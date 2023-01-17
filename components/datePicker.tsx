@@ -39,27 +39,28 @@ const onChange = async ({
   if (!end) {
     return;
   }
-  const responseData = await getData({ startDate, endDate });
-  console.log(responseData);
-  const resolve = await generateCSV({ data: responseData, setData });
-  alert(resolve);
+  await getData({ startDate, endDate })
+    .then((data) => generateCSV({ data, setData }))
+    .catch((err) => console.error(err));
 };
 
 const getData = async ({ startDate, endDate }: GetData) => {
   return new Promise<any>(async (resolve, _reject) => {
-    if (cache.get(`${startDate}-${endDate}-data`) == undefined) {
+    if (!cache.get(`${startDate}-${endDate}-data`)) {
       const { data: requestData } = await axios.get(
         `https://h2801469.stratoserver.net/get.php?id=2475238&from=${Math.floor(
           startDate.setHours(0, 0, 0, 1) / 1000,
         )}&to=${
           endDate == null
-            ? Math.floor(addDays(startDate, -1).getTime() / 1000)
+            ? Math.floor(new Date().getTime() / 1000)
             : Math.floor(endDate.getTime() / 1000)
-        }&minimize=false&with_gps=true&with_note=true`,
+        }&minimize=true&with_gps=false&with_note=false`,
       );
       cache.set(`${startDate}-${endDate}-data`, requestData);
       resolve(requestData);
+      return;
     }
+    console.log('> Cache');
     resolve(cache.get(`${startDate}-${endDate}-data`));
   });
 };
@@ -70,7 +71,7 @@ const headers = [
   { label: 'Temperatura', key: 't' },
   { label: 'Humidadde', key: 'h' },
   { label: 'Pressão', key: 'p' },
-  { label: 'Data', key: 'time' },
+  { label: 'Data (Formato Unix)', key: 'time' },
 ];
 
 const DatePickerElement = () => {
@@ -98,11 +99,12 @@ const DatePickerElement = () => {
         selectsRange
         inline
       />
-      {data && (
+      {data.length > 0 && (
         <CSVLink
           data={data}
           headers={headers}
           asyncOnClick={true}
+          className="btn btn-primary"
           filename={`sensor-espr-values.csv`}
           target="_blank"
         >
