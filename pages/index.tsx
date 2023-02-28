@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ChartViewer from '../components/chart';
+import PmEvaluator from '../components/pmEvaluator';
 import { useRouter } from 'next/router';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -58,14 +59,14 @@ const Home = () => {
         className="text-center mt-auto col-12 mb-3 mb-sm-0"
       >
         <h1 className="text-center">Qualidade do ar na Marinha Grande</h1>
-        <div
+        {/* <div
           className="alert alert-danger container"
           role="alert"
         >
           Devido a um problema técnico o nosso{' '}
           <a href="/temperatura">sensor de temperatura</a> deixou de funcionar,
           estamos a tentar resolver o problema...
-        </div>
+        </div> */}
         <h2 className="text-center">
           Temperatura atual: {temperature && temperature}ºC
         </h2>

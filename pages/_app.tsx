@@ -7,6 +7,7 @@ import type { AppProps } from 'next/app';
 
 const cache = new Map();
 
+
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <>

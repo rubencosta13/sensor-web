@@ -70,6 +70,7 @@ const getData = async ({ startDate, endDate }: GetData) => {
         )
         .then(({ data: requestData }) => {
           cache.set(cacheKey, requestData);
+          console.log(cache.get(cacheKey));
           resolve(requestData);
         })
         .catch(reject);
