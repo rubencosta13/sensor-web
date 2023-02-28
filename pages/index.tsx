@@ -45,7 +45,7 @@ const fetchData = async ({ setTemperature, setData }: FetchData) => {
 const Home = () => {
   const router = useRouter();
   const [temperature, setTemperature] = useState(null);
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<any>(null);
   const [currentDate] = useState<Date>();
 
   useEffect(() => {
@@ -80,16 +80,26 @@ const Home = () => {
         </button>
       </div>
       <ToastContainer />
+      {data && (
+        <PmEvaluator
+          pm10={data[data.length - 1].p1}
+          pm2={data[data.length - 1].p2}
+        />
+      )}
       <div
         style={{ width: '100%', height: '80vh' }}
         id="chart"
         className="mb-9"
       >
         {data && (
-          <ChartViewer
-            data={data}
-            date={currentDate}
-          />
+          <details>
+            <summary>Mostrar o Grafico</summary>
+
+            <ChartViewer
+              data={data}
+              date={currentDate}
+            />
+          </details>
         )}
       </div>
     </div>
