@@ -71,14 +71,7 @@ const Home = () => {
           Temperatura atual: {temperature && temperature}ºC
         </h2>
       </div>
-      <div className="d-flex justify-content-center">
-        <button
-          className="btn btn-success"
-          onClick={() => router.reload()}
-        >
-          Atualizar dados
-        </button>
-      </div>
+
       <ToastContainer />
       {data && (
         <PmEvaluator
@@ -92,9 +85,19 @@ const Home = () => {
         className="mb-9"
       >
         {data && (
-          <details>
-            <summary>Mostrar o Grafico</summary>
-
+          <details
+            className="text-center mb-5"
+            open
+          >
+            <summary>Mostrar / Esconder o Gráfico</summary>
+            <div className="d-flex justify-content-center">
+              <button
+                className="btn btn-success"
+                onClick={() => router.reload()}
+              >
+                Atualizar dados
+              </button>
+            </div>
             <ChartViewer
               data={data}
               date={currentDate}

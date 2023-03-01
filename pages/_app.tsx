@@ -4,6 +4,7 @@ import Layout from '../components/Layout';
 import 'bootstrap/dist/css/bootstrap.css';
 import GoogleAnalytics from '@bradgarropy/next-google-analytics';
 import type { AppProps } from 'next/app';
+import '../styles/index.css';
 
 const cache = new Map();
 

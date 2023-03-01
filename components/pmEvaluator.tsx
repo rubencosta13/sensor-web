@@ -16,7 +16,7 @@ const evaluatePm = (
     'Muito Bom': {
       pm10: [0, 20],
       pm2: [0, 10],
-      color: '#178509',
+      color: '#28d411',
     },
     Bom: {
       pm10: [21, 35],
@@ -31,7 +31,7 @@ const evaluatePm = (
     Fraco: {
       pm10: [51, 100],
       pm2: [26, 50],
-      color: '#db9007',
+      color: '#ffb326',
     },
     Mau: {
       pm10: [101, 1200],
@@ -41,10 +41,10 @@ const evaluatePm = (
   };
   for (const [key, value] of Object.entries(evaluation)) {
     if (
-      pm10 >= value.pm10[0] &&
-      pm10 <= value.pm10[1] &&
-      pm2 >= value.pm2[0] &&
-      pm2 <= value.pm2[1]
+      Math.trunc(pm10) >= value.pm10[0] &&
+      Math.trunc(pm10) <= value.pm10[1] &&
+      Math.trunc(pm2) >= value.pm2[0] &&
+      Math.trunc(pm2) <= value.pm2[1]
     ) {
       setEvaluation(key);
       setColor(value.color);
