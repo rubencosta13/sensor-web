@@ -10,38 +10,40 @@ import { CacheContext } from './_app';
 interface FetchData {
   setTemperature: React.Dispatch<React.SetStateAction<null>>;
   setData: React.Dispatch<React.SetStateAction<null>>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   cache: any;
 }
 
 const fetchData = async ({ setTemperature, setData, cache }: FetchData) => {
-  const yesterdayTime: number = Math.floor(
-    new Date().setHours(0, 0, 0, 1) / 1000,
-  );
+  const yesterdayTime: number = Math.floor(new Date().setHours(0, 0, 0, 1) / 1000);
   const todayTime: number = Math.floor(Date.now() / 1000);
-  console.log(cache);
-  if (cache.get(`${yesterdayTime}-${todayTime}-chartData`)) {
-    const data = cache.get(`${yesterdayTime}-${todayTime}-chartData`);
-    console.log('> Smart implementation of cache!');
+  const thirtySecondsAgo: number = Math.floor(Date.now() / 1000) - 30;
+
+  // Check if cache is available and recent
+  const cachedData = cache.get(`${yesterdayTime}-${todayTime}-chartData`);
+  if (cachedData) {
+    const cachedTimestamp = cachedData[cachedData.length - 1].timestamp; // Assuming timestamp property exists
+    if (cachedTimestamp >= thirtySecondsAgo) {
+      console.log('> Using cached data');
+      setTemperature(cachedData[cachedData.length - 1].t);
+      setData(cachedData);
+      toast.success('Dados obtidos com sucesso!');
+      return;
+    }
+  }
+
+  try {
+    console.log('> Fetching data from API');
+    const { data } = await axios.get(`https://h2801469.stratoserver.net/get.php?id=2475238&from=${yesterdayTime}&to=${todayTime}&minimize=false&with_gps=true&with_note=true`);
     setTemperature(data[data.length - 1].t);
     setData(data);
+    cache.set(`${yesterdayTime}-${todayTime}-chartData`, data);
     toast.success('Dados obtidos com sucesso!');
-    return;
-  } else {
-    try {
-      console.log('> No cache')
-      const { data } = await axios.get(
-        `https://h2801469.stratoserver.net/get.php?id=2475238&from=${yesterdayTime}&to=${todayTime}&minimize=false&with_gps=true&with_note=true`,
-      );
-      setTemperature(data[data.length - 1].t);
-      setData(data);
-      cache.set(`${yesterdayTime}-${todayTime}-chartData`, data);
-      toast.success('Dados obtidos com sucesso!');
-    } catch (err) {
-      console.groupCollapsed('> Error found');
-      console.error('> Error details: ', err);
-      console.groupEnd();
-      toast.error('Ocorreu um erro ao tentar receber dados!');
-    }
+  } catch (err) {
+    console.groupCollapsed('> Error found');
+    console.error('> Error details: ', err);
+    console.groupEnd();
+    toast.error('Ocorreu um erro ao tentar receber dados!');
   }
 };
 

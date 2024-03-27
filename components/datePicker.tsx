@@ -14,6 +14,7 @@ type GenerateCV = {
 interface GetData {
   startDate: Date | null;
   endDate: Date | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   cache: any;
 }
 

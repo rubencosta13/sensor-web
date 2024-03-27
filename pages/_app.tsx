@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { createContext, useState } from 'react';
 import Head from 'next/head';
 import Layout from '../components/Layout';
@@ -10,7 +11,8 @@ const CacheContext = createContext<Map<any, any>>(new Map());
 
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
-  const [cache, setCache] = useState<Map<any, any>>(new Map());
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [cache, _setCache] = useState<Map<any, any>>(new Map());
   return (
     <>
       <Head>
