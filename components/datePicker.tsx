@@ -1,9 +1,9 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { CSVLink } from 'react-csv';
-import { cache } from 'pages/_app';
+import { CacheContext } from 'pages/_app';
 
 type GenerateCV = {
   data: object[];
@@ -14,6 +14,7 @@ type GenerateCV = {
 interface GetData {
   startDate: Date | null;
   endDate: Date | null;
+  cache: any;
 }
 
 const generateCSV = ({ data, setData }: GenerateCV) => {
@@ -34,6 +35,7 @@ const onChange = async ({
   startDate,
   endDate,
   setData,
+  cache
 }: // eslint-disable-next-line @typescript-eslint/no-explicit-any
 any) => {
   const [start, end] = dates;
@@ -42,12 +44,12 @@ any) => {
   if (!end) {
     return;
   }
-  await getData({ startDate, endDate })
+  await getData({ startDate, endDate, cache })
     .then((data) => generateCSV({ data, setData }))
     .catch((err) => console.error(err));
 };
 
-const getData = async ({ startDate, endDate }: GetData) => {
+const getData = async ({ startDate, endDate, cache }: GetData) => {
   return new Promise<object[]>((resolve, reject) => {
     if (!startDate) {
       reject('No starting date was provided');
@@ -88,6 +90,7 @@ const headers = [
 ];
 
 const DatePickerElement = () => {
+  const cache = useContext(CacheContext);
   const [data, setData] = useState<Array<object>>([]);
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
@@ -105,6 +108,7 @@ const DatePickerElement = () => {
             endDate,
             data,
             setData,
+            cache
           })
         }
         startDate={startDate}

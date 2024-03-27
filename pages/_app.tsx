@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext, useState } from 'react';
 import Head from 'next/head';
 import Layout from '../components/Layout';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -6,10 +6,11 @@ import GoogleAnalytics from '@bradgarropy/next-google-analytics';
 import type { AppProps } from 'next/app';
 import '../styles/index.css';
 
-const cache = new Map();
+const CacheContext = createContext<Map<any, any>>(new Map());
 
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
+  const [cache, setCache] = useState<Map<any, any>>(new Map());
   return (
     <>
       <Head>
@@ -71,14 +72,17 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
           content="initial-scale=1.0, width=device-width"
         />
       </Head>
-      <Layout>
-        <div></div>
-        <GoogleAnalytics measurementId="G-KC26BBGRR9" />
-        <Component {...pageProps} />
-      </Layout>
+      <CacheContext.Provider value={cache}>
+        <Layout>
+          {/* <div></div> */}
+          <GoogleAnalytics measurementId="G-KC26BBGRR9" />
+          <Component {...pageProps} />
+        </Layout>
+      </CacheContext.Provider>
+
     </>
   );
 };
 
-export { cache };
+export { CacheContext };
 export default MyApp;

@@ -96,7 +96,6 @@ const dataPlotter = (data: Array<dataParams>) => {
 };
 
 const ChartViewer = ({ data }: params) => {
-  console.log(data);
   const [css, setCss] = useState('spinner-border');
   const [chartData, setChartData] = useState(dataForm);
   useEffect(() => {

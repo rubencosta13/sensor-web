@@ -1,40 +1,49 @@
 import TerserPlugin from 'terser-webpack-plugin';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import path from 'path';
 import { fileURLToPath } from 'url';
-import cssLoaderConfig from 'css-loader';
+import path, { dirname } from 'path';
 import 'dotenv/config';
+
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = dirname(__filename);
 
 export default {
-  webpack: (
-    config,
-    { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack },
-  ) => {
+  webpack: (config, { buildId, dev, isServer, defaultLoaders, nextRuntime }) => {
     config.resolve.fallback = { fs: false };
-    (config.mode = 'production'),
-      config.plugins.push(new MiniCssExtractPlugin(), new CssMinimizerPlugin()),
-      (config.optimization = {
-        nodeEnv: 'production',
-        minimize: true,
-        chunkIds: 'named',
-        concatenateModules: true,
-        emitOnErrors: true,
-        flagIncludedChunks: true,
-        mangleExports: true,
-        minimizer: [
-          new CssMinimizerPlugin(),
-          new TerserPlugin({
-            terserOptions: {
-              compress: {
-                drop_console: true,
-              },
+
+    config.mode = 'production';
+
+    config.plugins.push(
+      new MiniCssExtractPlugin(),
+    );
+
+    config.optimization = {
+      nodeEnv: 'production',
+      minimize: true,
+      chunkIds: 'named',
+      concatenateModules: true,
+      emitOnErrors: true,
+      flagIncludedChunks: true,
+      mangleExports: true,
+      minimizer: [
+        new CssMinimizerPlugin(),
+        new TerserPlugin({
+          terserOptions: {
+            compress: {
+              drop_console: true,
+              inline: 1,
+              reduce_funcs: false,
+              passes: 3,
+              drop_debugger: true,
             },
-          }),
-        ],
-      });
+            output: {
+              comments: false,
+            },
+          },
+        }),
+      ],
+    };
 
     return config;
   },

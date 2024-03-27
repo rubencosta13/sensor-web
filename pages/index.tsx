@@ -1,22 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import ChartViewer from '../components/chart';
 import PmEvaluator from '../components/pmEvaluator';
 import { useRouter } from 'next/router';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { cache } from './_app';
+import { CacheContext } from './_app';
 
 interface FetchData {
   setTemperature: React.Dispatch<React.SetStateAction<null>>;
   setData: React.Dispatch<React.SetStateAction<null>>;
+  cache: any;
 }
 
-const fetchData = async ({ setTemperature, setData }: FetchData) => {
+const fetchData = async ({ setTemperature, setData, cache }: FetchData) => {
   const yesterdayTime: number = Math.floor(
     new Date().setHours(0, 0, 0, 1) / 1000,
   );
   const todayTime: number = Math.floor(Date.now() / 1000);
+  console.log(cache);
   if (cache.get(`${yesterdayTime}-${todayTime}-chartData`)) {
     const data = cache.get(`${yesterdayTime}-${todayTime}-chartData`);
     console.log('> Smart implementation of cache!');
@@ -26,6 +28,7 @@ const fetchData = async ({ setTemperature, setData }: FetchData) => {
     return;
   } else {
     try {
+      console.log('> No cache')
       const { data } = await axios.get(
         `https://h2801469.stratoserver.net/get.php?id=2475238&from=${yesterdayTime}&to=${todayTime}&minimize=false&with_gps=true&with_note=true`,
       );
@@ -43,13 +46,14 @@ const fetchData = async ({ setTemperature, setData }: FetchData) => {
 };
 
 const Home = () => {
+  const cache = useContext(CacheContext);
   const router = useRouter();
   const [temperature, setTemperature] = useState(null);
   const [data, setData] = useState<any>(null);
   const [currentDate] = useState<Date>();
 
   useEffect(() => {
-    fetchData({ setTemperature, setData });
+    fetchData({ setTemperature, setData, cache });
   }, []);
 
   return (
